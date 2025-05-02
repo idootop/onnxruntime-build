@@ -27,13 +27,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Cache build result for ${{ env.ONNXRUNTIME_VERSION }}
-        id: cache-build-result
-        uses: actions/cache@v4
-        with:
-          path: onnxruntime-linux-arm-${{ env.ONNXRUNTIME_VERSION }}
-          key: onnxruntime-arm-linux-${{ env.ONNXRUNTIME_VERSION }}-cache-v1
-
       - name: ccache
         uses: hendrikmuhs/ccache-action@v1.2
         with:
@@ -46,13 +39,6 @@ jobs:
           cd onnxruntime
           git fetch origin tag v$ONNXRUNTIME_VERSION
           git checkout v$ONNXRUNTIME_VERSION
-
-      - name: cache-toolchain
-        id: cache-toolchain
-        uses: actions/cache@v4
-        with:
-          path: toolchain
-          key: gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf
 
       - name: Download toolchain
         shell: bash
