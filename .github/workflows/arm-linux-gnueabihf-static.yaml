@@ -128,6 +128,7 @@ jobs:
           export CMAKE_CXX_COMPILER_LAUNCHER=ccache
           export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
           export CMAKE_OPTIONS="-DCMAKE_TOOLCHAIN_FILE=$GITHUB_WORKSPACE/arm-linux-gnueabihf.toolchain.cmake -Donnxruntime_CROSS_COMPILING=ON --compile-no-warning-as-error -Donnxruntime_BUILD_UNIT_TESTS=OFF -DONNX_CUSTOM_PROTOC_EXECUTABLE=$GITHUB_WORKSPACE/bin/protoc"
+          
           ./build-static_lib.sh
 
       - name: Collect result
@@ -140,6 +141,11 @@ jobs:
 
           dst=onnxruntime-linux-arm-static_lib-${ONNXRUNTIME_VERSION}
           mkdir $dst
+
+          if [ -f onnxruntime/include/onnxruntime/core/session/onnxruntime_float16.h ]; then
+            cp -fv onnxruntime/include/onnxruntime/core/session/onnxruntime_float16.h output/static_lib/include
+          fi
+          
           mv -v output/static_lib/* $dst
 
           zip -r ${dst}.zip $dst/
