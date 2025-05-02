@@ -204,7 +204,7 @@ jobs:
           fi
 
           DIST_NAME=onnxruntime-linux-arm-shared-v${{ env.ONNXRUNTIME_VERSION }}
-          zip -r $DIST_NAME.zip onnxruntime-linux-arm-$version/
+          zip -r $DIST_NAME.zip onnxruntime-linux-arm-$version/*
           echo "DIST_NAME=$DIST_NAME" >> "$GITHUB_ENV"
 
       - name: Upload artifact
