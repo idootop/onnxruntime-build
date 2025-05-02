@@ -48,7 +48,7 @@ if(EXISTS ${FLOAT16_HEADER})
       ${ONNXRUNTIME_SOURCE_DIR}/include/onnxruntime/core/session/onnxruntime_float16.h
       TYPE INCLUDE
   )
-endif
+endif()
 
 if(APPLE)
   install(
