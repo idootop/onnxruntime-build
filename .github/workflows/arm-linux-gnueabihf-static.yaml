@@ -119,7 +119,9 @@ jobs:
           fi
 
           DIST_NAME=onnxruntime-linux-arm-static-v${{ env.ONNXRUNTIME_VERSION }}
-          zip -r ${DIST_NAME}.zip output/static_lib/*
+          mkdir -p ${DIST_NAME}
+          mv -v output/static_lib/* ${DIST_NAME}/
+          zip -r ${DIST_NAME}.zip ${DIST_NAME}/
           echo "DIST_NAME=$DIST_NAME" >> "$GITHUB_ENV"
 
       - name: Upload artifact
