@@ -58,7 +58,7 @@ jobs:
           key: gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf
 
       - name: Download toolchain
-        if: steps.cache-toolchain.outputs.cache-hit != 'true' && steps.cache-build-result.outputs.cache-hit != 'true'
+        if: steps.cache-toolchain.outputs.cache-hit != 'true'
         shell: bash
         run: |
           wget https://releases.linaro.org/components/toolchain/binaries/latest-7/arm-linux-gnueabihf/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz

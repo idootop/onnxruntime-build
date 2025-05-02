@@ -41,6 +41,7 @@ jobs:
           ref: v${{ env.ONNXRUNTIME_VERSION }}
 
       - name: cache-toolchain
+        if: steps.cache-build-result.outputs.cache-hit != 'true'
         id: cache-toolchain
         uses: actions/cache@v4
         with:
@@ -115,6 +116,7 @@ jobs:
           # find cmake -type f -name "*.cmake" -exec sed -i 's/cmake_minimum_required(VERSION 3\.0)/cmake_minimum_required(VERSION 3.5)/g' {} +
 
       - name: apply patch
+        if: steps.cache-build-result.outputs.cache-hit != 'true'
         shell: bash
         run: |
           cd tools/ci_build
