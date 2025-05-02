@@ -52,7 +52,7 @@ jobs:
       - name: cache-toolchain
         if: steps.cache-build-result.outputs.cache-hit != 'true'
         id: cache-toolchain
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: toolchain
           key: gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf
@@ -155,7 +155,7 @@ jobs:
           repo_token: ${{ secrets.UPLOAD_GH_SHERPA_ONNX_TOKEN }}
           tag: v${{ env.ONNXRUNTIME_VERSION }}
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: steps.cache-build-result.outputs.cache-hit != 'true'
         with:
           name: onnxruntime-linux-arm-static_lib-${ONNXRUNTIME_VERSION}
