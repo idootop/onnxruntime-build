@@ -203,23 +203,26 @@ jobs:
             cp -fv ./include/onnxruntime/core/session/onnxruntime_float16.h ./onnxruntime-linux-arm-$version/include
           fi
 
-          zip -r onnxruntime-linux-arm-${version}.zip ./onnxruntime-linux-arm-$version/
+          DIST_NAME=onnxruntime-linux-arm-shared-v${{ env.ONNXRUNTIME_VERSION }}
+          zip -r $DIST_NAME.zip onnxruntime-linux-arm-$version/
+          echo "DIST_NAME=$DIST_NAME" >> "$GITHUB_ENV"
 
       - name: Upload artifact
         if: steps.cache-build-result.outputs.cache-hit != 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: onnxruntime-linux-arm-shared-${{ env.ONNXRUNTIME_VERSION }}
-          path: onnxruntime-linux-arm-shared-${{ env.ONNXRUNTIME_VERSION }}
+          name: ${{ env.DIST_NAME }}
+          path: ${{ env.DIST_NAME }}.zip
 
       - name: Upload v${{ env.ONNXRUNTIME_VERSION }}
         if: steps.cache-build-result.outputs.cache-hit != 'true'
         uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
-          token: ${{ secrets.GITHUB_TOKEN }}
-          name: onnxruntime-linux-arm-shared-v${{ env.ONNXRUNTIME_VERSION }}
-          tag: onnxruntime-linux-arm-shared-v${{ env.ONNXRUNTIME_VERSION }}
           draft: false
           removeArtifacts: true
-          artifacts: onnxruntime-linux-arm-${{ env.ONNXRUNTIME_VERSION }}.zip
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: v${{ env.ONNXRUNTIME_VERSION }}-shared
+          tag: v${{ env.ONNXRUNTIME_VERSION }}-shared
+          body: "${{ env.DIST_NAME }}"
+          artifacts: ${{ env.DIST_NAME }}.zip
